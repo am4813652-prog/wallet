@@ -1,6 +1,6 @@
 # Reproducible APK build workflow
 
-This repository builds the Expo project into an Android APK through a manual GitHub Actions workflow; this avoids needing the user's Expo access token. The workflow installs Node 22, Android SDK platform/build-tools 36, NDK `27.1.12297006`, runs type/lint/wallet transaction tests, regenerates Android native files from Expo config, runs Gradle `:app:assembleRelease`, and uploads an artifact for 14 days. Expo's official `expo-build-properties` plugin pins `compileSdkVersion` and `buildToolsVersion` to the stable API 36 toolchain.
+This repository builds the Expo project into an Android APK through a manual GitHub Actions workflow; this avoids needing the user's Expo access token. The workflow installs Node 22, Android SDK platform 37.2/build-tools 37.0.0, NDK `27.1.12297006`, runs type/lint/wallet transaction tests, regenerates Android native files from Expo config, runs Gradle `:app:assembleRelease`, and uploads an artifact for 14 days. Expo's official `expo-build-properties` plugin pins `compileSdkVersion` and `buildToolsVersion` to the stable API 37 toolchain.
 
 The generated build is a **debug-key-signed release variant for testing/installation only**, not a production/distribution signing key and not appropriate for public store release. The signing configuration comes from Expo prebuild's debug config. For production, create/securely manage a user-owned release keystore and perform an independent security audit.
 
@@ -11,7 +11,7 @@ GitHub Actions permissions are limited to `contents: read`; only `workflow_dispa
 - `actions/setup-node` v7.1.0 — `949feb2413d6458794dcd2491c4babbbce0c15c1`.
 - `actions/upload-artifact` v7.0.2 — `cf430e030ddbb5b0abf93d22962f4752f3646cd9`.
 
-The Expo config explicitly selects compile SDK 36 and build-tools 36.0.0; the Expo SDK's default NDK version remains `27.1.12297006`.
+The Expo config explicitly selects compile SDK 37 and build-tools 37.0.0; the Expo SDK's default NDK version remains `27.1.12297006`.
 
 Sources:
 
