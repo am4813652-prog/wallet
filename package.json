@@ -40,7 +40,7 @@
     "test:pin-kdf": "node scripts/pin-kdf-smoke.mjs",
     "test:transactions": "node --experimental-strip-types --experimental-default-type=module scripts/transactions-smoke.mjs",
     "verify:networks": "node --experimental-strip-types --experimental-default-type=module scripts/verify-enabled-networks.mjs",
-    "build:apk": "eas build --platform android --profile preview",
+    "build:apk": "npx --yes eas-cli@latest build --platform android --profile preview",
     "lint": "expo lint"
   },
   "private": true

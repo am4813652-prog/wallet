@@ -37,18 +37,25 @@ npx expo start
 
 Expo Go is useful for previewing parts of the UI, but Android biometrics and the release/native configuration must be tested in a built Android app on a physical device.
 
-## Build an Android APK
+## Build an Android APK with Expo
 
-The `preview` EAS profile is configured for a directly installable Android APK. EAS Build requires an Expo/EAS account and successful authentication:
+The `preview` profile in `eas.json` is configured to produce an installable Android APK. **When starting a build in Expo, select platform `Android` and profile `preview`. Do not select `production`: that profile intentionally produces an AAB for Google Play.** Expo's default Android output is an AAB, while an APK is required for direct installation on a device.[1]
+
+Expo documents a successful initial EAS build for a platform as a prerequisite for GitHub-triggered builds. If you have not completed an EAS Android build before, first use EAS CLI on a computer with Node.js and authenticate to your Expo account:
 
 ```bash
-npx eas-cli login
+npx --yes eas-cli@latest login --device
 npm run build:apk
 ```
 
+Complete the browser/device login flow, then wait for that `preview` APK build to finish successfully. For the dashboard route, connect the Expo GitHub App to your GitHub account and link this repository to the Wallet project. On the project's **Builds** page, choose **Build from GitHub**, select the `main` branch (or another intended ref), choose **Android**, and select the **preview** profile. When the build completes, open its details in Expo and download the APK. The full setup is in [`docs/eas-apk-build.md`](docs/eas-apk-build.md).[2]
+
 An alternative workflow, `.github/workflows/build-wallet-apk.yml`, builds this Expo project through GitHub Actions without an Expo access token. Run it manually from the repository's **Actions** tab using **Build Wallet Android APK → Run workflow**. The APK is attached as the `wallet-android-apk` artifact for 14 days. This is a debug-key-signed release variant for testing and sideloading only, not a production signing key or store-ready release. See `docs/apk-github-actions.md` for the pinned action sources and limitations.
 
-Never send an Expo password/access token, recovery phrase or private key in chat. The EAS project ID is configured; the EAS route still needs an authenticated account.
+Never send an Expo password/access token, recovery phrase, or private key in chat. The EAS project ID is configured; an Expo account is required to start an EAS build.
+
+[1]: https://docs.expo.dev/build-reference/apk/ "Build APKs for Android Emulators and devices — Expo"
+[2]: https://docs.expo.dev/build/building-from-github/ "Trigger builds from the Expo GitHub App — Expo"
 
 ## Checks
 
