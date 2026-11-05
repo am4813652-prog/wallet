@@ -39,7 +39,7 @@ Expo Go is useful for previewing parts of the UI, but Android biometrics and the
 
 ## Build an Android APK with Expo
 
-The `preview` profile in `eas.json` is configured to produce an installable Android APK. **When starting a build in Expo, select platform `Android` and profile `preview`. Do not select `production`: that profile intentionally produces an AAB for Google Play.** Expo's default Android output is an AAB, while an APK is required for direct installation on a device.[1]
+Every Android profile in `eas.json`—`development`, `preview`, and `production`—is explicitly configured to produce an installable APK. **Choose Android in Expo; even if the dashboard defaults to `production`, this repository now configures that profile to output APK.** The `preview` profile is still recommended for testing. Expo's default Android output is an AAB unless the profile sets `android.buildType` to `apk`; this repository now does so for every profile.[1]
 
 Expo documents a successful initial EAS build for a platform as a prerequisite for GitHub-triggered builds. If you have not completed an EAS Android build before, first use EAS CLI on a computer with Node.js and authenticate to your Expo account:
 
@@ -48,11 +48,11 @@ npx --yes eas-cli@latest login --device
 npm run build:apk
 ```
 
-Complete the browser/device login flow, then wait for that `preview` APK build to finish successfully. For the dashboard route, connect the Expo GitHub App to your GitHub account and link this repository to the Wallet project. On the project's **Builds** page, choose **Build from GitHub**, select the `main` branch (or another intended ref), choose **Android**, and select the **preview** profile. When the build completes, open its details in Expo and download the APK. The full setup is in [`docs/eas-apk-build.md`](docs/eas-apk-build.md).[2]
+Complete the browser/device login flow, then wait for the `preview` APK build to finish successfully. For the dashboard route, connect the Expo GitHub App to your GitHub account and link this repository to the Wallet project. On the project's **Builds** page, choose **Build from GitHub**, select the `main` branch (or another intended ref), choose **Android**, and select `preview` (recommended) or another profile. Every Android profile now outputs an APK. When the build completes, open its details in Expo and download the APK. The full setup is in [`docs/eas-apk-build.md`](docs/eas-apk-build.md).[2]
 
 An alternative workflow, `.github/workflows/build-wallet-apk.yml`, builds this Expo project through GitHub Actions without an Expo access token. Run it manually from the repository's **Actions** tab using **Build Wallet Android APK → Run workflow**. The APK is attached as the `wallet-android-apk` artifact for 14 days. This is a debug-key-signed release variant for testing and sideloading only, not a production signing key or store-ready release. See `docs/apk-github-actions.md` for the pinned action sources and limitations.
 
-Never send an Expo password/access token, recovery phrase, or private key in chat. The EAS project ID is configured; an Expo account is required to start an EAS build.
+Never send an Expo password/access token, recovery phrase, or private key in chat. The EAS project ID is configured; an Expo account is required to start an EAS build. All current Android profiles intentionally produce APKs for direct installation/testing. If a Google Play App Bundle is needed later, add a separate store profile with `android.buildType: "app-bundle"` rather than changing these APK profiles.
 
 [1]: https://docs.expo.dev/build-reference/apk/ "Build APKs for Android Emulators and devices — Expo"
 [2]: https://docs.expo.dev/build/building-from-github/ "Trigger builds from the Expo GitHub App — Expo"

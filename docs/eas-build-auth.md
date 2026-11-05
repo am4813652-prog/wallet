@@ -1,8 +1,8 @@
 # EAS APK build and authentication notes
 
-The `preview` profile in `eas.json` is configured for a directly installable Android APK. The `production` profile is configured for an Android App Bundle (AAB), so select `preview` whenever the goal is an APK.
+All Android profiles in `eas.json`—`development`, `preview`, and `production`—are explicitly configured to produce directly installable APKs. The `preview` profile is recommended for testing. The current `production` profile also outputs APK and is not configured for an Android App Bundle (AAB).
 
-The project already contains an EAS project ID in `app.json` and the source repository is rooted at `/`. To build from the Expo dashboard, connect the Expo GitHub App, link this repository to the Wallet project, and use **Build from GitHub** with platform **Android** and profile **preview**. See [`eas-apk-build.md`](eas-apk-build.md) for the complete steps.
+The project already contains an EAS project ID in `app.json` and the source repository is rooted at `/`. To build from the Expo dashboard, connect the Expo GitHub App, link this repository to the Wallet project, and use **Build from GitHub** with platform **Android** and any current profile (recommended: **preview**). See [`eas-apk-build.md`](eas-apk-build.md) for the complete steps.
 
 Expo currently documents a successful initial local EAS build for a platform as a prerequisite for triggering builds from GitHub. If required, authenticate with Expo's device login on a computer and run the repository's `npm run build:apk` script. The script calls EAS CLI through `npx`, so a global EAS CLI installation is not required. Do not put an Expo personal access token, password, wallet seed, or private key in source control, logs, or chat.
 
